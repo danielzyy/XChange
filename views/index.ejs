@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>XChange</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.4/css/bulma.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="block">
+      <nav class="nav" role="navigation" aria-label="main navigation">
+        <div class="nav-right nav-menu topLogo">
+          <img src="Logo.png" height= "50" width= "130">
+        </div>
+
+        <div class="nav-right nav-menu">
+          <% if(typeof user === 'undefined') { %>
+            <a href="/auth/google" class="nav-item">Login</a>
+          <% } else { %>
+            <div class="navbar-item has-dropdown is-hoverable">
+              <a class="navbar-link" href="javascript: void(0);">
+                Welcome, <%= user.username %>
+              </a>
+              <div class="navbar-dropdown">
+                <a class="navbar-link" href="/auth/logout">
+                  Logout
+                </a>
+                <a class="navbar-link" href="javascript: reset()">
+                  Reset
+                </a>
+              </div>
+            </div>
+            <!--
+            <div class="dropDown">
+              <a href="#" class="nav-item"></a>
+              <div class="dropContent">
+                <a>Change Budget<br></a>
+                <a>Clear Balance<br></a>
+                <a>Logout</a>
+              </div>
+            </div>  
+            -->              
+          <% } %>
+          <!-- be sure to preserve this -->
+        </div>
+      </nav>
+    </div>
+    <div id="mainBody"class="container">  
+      <h1 id="mapTitle" class="column is-three-quarters">Currency Exchange Stations</h1>    
+      <div class="columns block">
+        <div class="column is-three-quarters">
+          <div id="mapArea">
+            <div id="map"></div>
+          </div>
+          <div id="locationForm">
+            <form>
+              
+              <div id="label1"> 
+                <label class="label">Update Exchange Station Rates</label>      
+              </div>
+              <div class="field has-addons">
+                <p class="control">
+                  <input class="input" type="text" id="location" placeholder="Enter Location">
+                </p>
+                <p class="control">
+                  <input class="button" id="submitLoc" type="submit" value="Choose Current Location" onclick="geocodeAddress();">
+                </p>
+              </div>
+            </form>
+          </div>
+        </div>
+        
+        <div id="balance" class="column is-one-quarter block">
+          <img class="logo" src="LogoInvert.png" height="70" width="140">
+          <h2 class="title is-2">some money! </h2>
+          <h3 class="subtitle is-3">Track your expenses in your native currency with accurate and reliable XE Currency data from around the world.</h3>
+          <hr>
+          <h1 class="title is-1">Your Balance: </h1> <h1 id="remainder" class="title is-1"></h1>
+          <p id="budget">Your budget:</p>
+          <div class="block">
+            <div id="setBudget"  class="field has-addons">
+              <p class="control">
+                <input class="input" type="text" id="userInput" placeholder="Enter a budget">
+              </p>
+              <p class="control">
+                <input class="button" type="submit" id="submit" onclick="submitBudget();">
+              </p>
+            </div>
+          </div>
+
+          <div id="amount" class="block">
+              <div id="pay" class="field has-addons">
+                  <div>
+                    <p class="control">
+                        <input class="input" type="text" id="transaction" placeholder="Enter amount (e.g. 25.20 USD)">
+                    </p>
+                    <p class="control">
+                        <input class="button" type="submit" onclick="payment();">
+                    </p>
+                  </div>
+              </div>
+
+              <p id="descriptionInput" class="field has-addons">
+                  <input class="input" type="text" id="description" placeholder="Optional Description">
+              </p>
+              <h3 class="title is-3">Recent Transactions</h3>
+              <hr>
+              <table class="table is-striped">          
+                  <thead>
+                    <tr>
+                      <th>Foreign Currency</th>
+                      <th>Native Currency<p id="homeCur"></p></th>
+                      <th>Balance</th>
+                      <th>Date</th>
+                    </tr>
+                  </thead>
+                  <tbody id="transactions">
+                  </tbody>
+                </table>
+          </div>
+        </div>
+      </div>
+    </div> 
+    <script src="main.js"></script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBeYhpiQO4ue0N2yzsnNf08GVTzY52J48c&callback=initMap">
+    </script>
+</body>
+</html> 
